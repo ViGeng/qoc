@@ -2,11 +2,9 @@
 
 # Get today's date in seconds since epoch
 today=$(date +%s)
-echo "Today is $today"
 
-# Get the target date in seconds since epoch from the first argument
-target=$(date -d "$1" +%s)
-echo "Target day is $target"
+# Get the target date in seconds since epoch
+target=$(date -j -f "%Y-%m-%d" "$1" "+%s")
 
 # Calculate the difference in seconds
 diff=$((target - today))
