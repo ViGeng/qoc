@@ -15,11 +15,26 @@ users can combine them to implement their data transmission or computation flexi
 
 ## Update and RoadMap
 
+At current stage, this project focuses on implementing a minimal proof-of-concept (PoC) program 
+to demonstrate the feasibility of the design. So there are several hypotheses and assumptions:
+1. The network is reliable and stable.
+2. The data security is not considered.
+3. All nodes know the routing information.
+4. No reward mechanism is considered.
+
 ### Todo
 
 - [ ] network and tree-app decoupling
     - [ ] function separation and design: a diagram 
     - [ ] API definition
+- [ ] Graph Implementation (not a tree anymore)
+
+### 2023-05-08
+- [ ] A framework to simulate the remote execution process
+  - [ ] Node (forwarders mainly) and its Main components and functions
+    - [ ] 
+  - [ ] Node generator and initializer (generate a network and distribute tasks)
+  - [ ] Routing center
 
 ### 2023/4/28
 
@@ -27,9 +42,7 @@ users can combine them to implement their data transmission or computation flexi
 - [x] simple recursive execution
 - [x] implement the tree as a multiway tree for performance, because the **depth determines the 
   performance of the whole system**
-
-### 2023/4/28
-- [x] init project2023/4/28
+- [x] init project
 - [x] write simple shell for concept demo
 
 ## Design

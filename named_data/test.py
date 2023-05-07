@@ -89,8 +89,6 @@ def get_deep_nd_case():
     ), 0
 
 
-
-
 def get_transparent_nd_case():
 
     data = get_nd_data('data/123')
@@ -114,8 +112,10 @@ def test_func():
     deep, expected_value = get_deep_nd_case()
     print(deep.reduce())
 
+
 def main():
     test_func()
+
 
 if __name__ == '__main__':
     main()
