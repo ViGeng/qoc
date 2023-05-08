@@ -24,13 +24,16 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 
 ### Todo
 
+- [ ] virtual node (for load balancing and error exception separation) a physical node can have 
+  multiple virtual nodes. the idea borrowed from the consistent hashing algorithm.
+
 - [ ] network and tree-app decoupling
     - [ ] function separation and design: a diagram 
     - [ ] API definition
 - [ ] Graph Implementation (not a tree anymore)
 
 ### 2023-05-08
-- [ ] A framework to simulate the remote execution process
+- [ ] A framework to simulate the remote execution process (actor programming paradigm)
   - [ ] Node (forwarders mainly) and its Main components and functions
     - [ ] 
   - [ ] Node generator and initializer (generate a network and distribute tasks)
