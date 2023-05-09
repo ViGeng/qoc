@@ -48,8 +48,8 @@ class Forwarder(Node):
         :return:
         """
         nd = await self._input_request_queue.get()
-        self._outbound()
-        pass
+        self._outbound(nd)
+        return nd
 
     def forward(self, nd: NamedData):
         """
@@ -61,42 +61,12 @@ class Forwarder(Node):
         self._inbound(nd)
         await self._input_request_queue.put(nd)
 
+    def send(self, nd: NamedData):
+        link = self.fib.query(nd)
+        link.transmit(nd)
+
     async def forwarding(self):
         while self.Enabled:
-            await self.receive() # await other forwarder to foward requests to this node
+            nd = await self.receive()  # await other forwarder to foward requests to this node
+            self.send(nd)
 
-"""
-import asyncio
-
-class Actor:
-    def __init__(self):
-        self._mailbox = asyncio.Queue()
-
-    async def send(self, msg):
-        await self._mailbox.put(msg)
-
-    async def recv(self):
-        return await self._mailbox.get()
-
-    async def actor_loop(self):
-        while True:
-            msg = await self.recv()
-            # process the message
-            print(f"Received message: {msg}")
-
-class Message:
-    pass
-
-async def main():
-    actor = Actor()
-    asyncio.create_task(actor.actor_loop())
-
-    # send some messages to the actor
-    for i in range(5):
-        msg = Message()
-        await actor.send(msg)
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
-"""
