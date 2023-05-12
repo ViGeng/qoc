@@ -28,13 +28,17 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
     - [ ] function separation and design: a diagram 
     - [ ] API definition
 - [ ] Graph Implementation (not a tree anymore)
-
-### 2023-05-08
 - [ ] A framework to simulate the remote execution process
   - [ ] Node (forwarders mainly) and its Main components and functions
     - [ ] 
   - [ ] Node generator and initializer (generate a network and distribute tasks)
   - [ ] Routing center
+
+### 2023-05-12
+
+- [x] add Forwarder class
+- [ ] add Consumer class
+- [ ] add consumer-to-forwarder test case
 
 ### 2023/4/28
 
