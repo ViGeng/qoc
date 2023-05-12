@@ -37,7 +37,7 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 ### 2023-05-12
 
 - [x] add Forwarder class
-- [ ] add Consumer class
+- [x] add Consumer class
 - [ ] add consumer-to-forwarder test case
 
 ### 2023/4/28
