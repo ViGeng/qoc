@@ -38,7 +38,7 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 
 - [x] add Forwarder class
 - [x] add Consumer class
-- [ ] add consumer-to-forwarder test case
+- [x] add consumer-to-forwarder test case: test_forwarder.py
 
 ### 2023/4/28
 
