@@ -51,6 +51,7 @@ def get_nd_data(type_str: str):
             random.randint(0, 10),
         )
 
+
 def get_opaque_nd_case():
     data = get_nd_data('data/2random')
     add2random = NamedData(

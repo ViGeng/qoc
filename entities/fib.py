@@ -2,6 +2,11 @@ from entities.link import Link
 
 
 class ForwardingInformationBase:
+    """
+    FIB (Forwarding Information Base):
+        stores prefix-to-next-hop mappings
+        and supports prefix matching and longest-prefix matching.
+    """
     def __init__(self):
         self.fib = {}
 

@@ -1,4 +1,10 @@
-class PendingInterestTable():
+class PendingInterestTable:
+    """
+    PIT (Pending Interest Table): stores pending interests,
+        and when a data packet arrives,
+        the router looks up the PIT to find the corresponding interest
+        and forwards the data to the source of that interest.
+    """
     def __init__(self):
         self.table = {}
 

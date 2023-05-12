@@ -1,10 +1,12 @@
 import named_data
 
+
 class NamedData:
-    '''
-    _FUNC, _DATA represent recursive boundrary conditions
-    '''
-    def __init__(self, name:str, func, *data):
+    """
+    _FUNC, _DATA represent recursive boundary conditions
+    """
+
+    def __init__(self, name: str, func, *data):
 
         self.result = None
         self.name = name
