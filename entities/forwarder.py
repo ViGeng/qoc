@@ -50,6 +50,10 @@ class Forwarder:
     def add_peer(self, peer):
         self.faces.add(peer.node_info.name, peer)
 
+    def add_route(self, prefix, peer_name, peer_ref):
+        self.fib.add(prefix, peer_name)
+        self.faces.add(peer_name, peer_ref)
+
     async def forward_interest(self, interest: Interest, last_hop_name: str, last_hop_ref):
         """
         Receive an Interest from outside.
@@ -60,7 +64,7 @@ class Forwarder:
         :return: None
         """
         debug(f"forwarding interest {interest} from {last_hop_name}")
-        self.fib.add(interest.name, last_hop_name)
+        self.pit.add(interest, last_hop_name)
         self.faces.add(last_hop_name, last_hop_ref)
         await self._incoming_interest_queue.put((interest, last_hop_name))
 
@@ -72,7 +76,6 @@ class Forwarder:
         """
         while True:
             interest, last_hop_name = await self._incoming_interest_queue.get()
-            self.pit.add(interest, last_hop_name)
             response = self.cs.query(interest)
             if response is None:
                 debug(f"No local data for {interest}, forwarding")
@@ -81,17 +84,17 @@ class Forwarder:
                 debug(f"Found local data for {interest}, sending back")
                 self.send_data(response)
 
-    def send_interest(self, interest: Interest):
+    async def send_interest(self, interest: Interest):
         peer_name = self.fib.query(interest)
         peer = self.faces.query_by_peer_name(peer_name)
         debug(f"send interest {interest} to {peer_name}")
-        peer.forward_interest(interest, self.node_info.name, self)
+        await peer.forward_interest(interest, self.node_info.name, self)
 
     async def forwarding_interest(self):
         debug("Coroutine forwarding_interest started")
         while self.forwarding_interest_enabled:
             interest = await self.receive_interest()
-            self.send_interest(interest)
+            await self.send_interest(interest)
 
     async def forward_data(self, data: Data):
         """
@@ -109,7 +112,7 @@ class Forwarder:
         :return:
         """
         data = await self._incoming_data_queue.get()
-        debug(f"received data {data}")
+        debug(f"Forwarder:{self.node_info.name} received data {data}")
         return data
 
     async def forwarding_data(self):

@@ -34,6 +34,30 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
   - [ ] Node generator and initializer (generate a network and distribute tasks)
   - [ ] Routing center
 
+### 2023-05-14
+
+- [x] add Class Provider
+- [ ] add more test cases
+  - [x] 1. consumer-to-forwarder
+  - [x] 2. consumer-to-forwarder-to-provider
+
+test cases:
+```
+1.
+               Interest
+     ┌──────────┬───────────►┌───────────┐
+     │ Consumer │            │ Forwarder │
+     └──────────┘◄───────────┴───────────┘
+                     Data
+
+2.
+            Interest               Interest
+    ┌──────────┬───────────►┌───────────┬──────►┌──────────┐
+    │ Consumer1│            │ Forwarder1│       │ Provider1│
+    └──────────┘◄───────────┴───────────┘◄──────┴──────────┘
+                    Data                 Data
+```
+
 ### 2023-05-12
 
 - [x] add Forwarder class

@@ -1,5 +1,4 @@
 import asyncio
-import time
 from logging import debug
 
 from entities.packet import Data
