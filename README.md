@@ -40,22 +40,29 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 - [ ] add more test cases
   - [x] 1. consumer-to-forwarder
   - [x] 2. consumer-to-forwarder-to-provider
+  - [x] 3. line-shape: 2 forwarders
 
 test cases:
 ```
 1.
                Interest
-     ┌──────────┬───────────►┌───────────┐
+     ┌──────────┬ ──────────►┌───────────┐
      │ Consumer │            │ Forwarder │
-     └──────────┘◄───────────┴───────────┘
+     └──────────┘◄────────── ┴───────────┘
                      Data
 
 2.
-            Interest               Interest
-    ┌──────────┬───────────►┌───────────┬──────►┌──────────┐
+                 Interest               Interest
+    ┌──────────┬ ──────────►┌───────────┬ ─────►┌──────────┐
     │ Consumer1│            │ Forwarder1│       │ Provider1│
-    └──────────┘◄───────────┴───────────┘◄──────┴──────────┘
+    └──────────┘◄────────── ┴───────────┘◄───── ┴──────────┘
                     Data                 Data
+3.
+              Interest                Interest                 Interest
+┌──────────┐ ─────────► ┌──────────┐ ─────────► ┌───────────┐ ─────────► ┌──────────┐
+│ Consumer │            │ Forarder │            │ Forwarder │            │ Provider │
+└──────────┘ ◄───────── └──────────┘ ◄───────── └───────────┘ ◄───────── └──────────┘
+                Data                    Data                     Data
 ```
 
 ### 2023-05-12

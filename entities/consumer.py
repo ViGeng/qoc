@@ -17,7 +17,7 @@ class Consumer:
         debug(f"Consumer {self.name} is sending interest {self.interest} to forwarder: {self.forwarder.node_info.name}")
         await self.forwarder.forward_interest(self.interest, self.name, self)
 
-    def forward_data(self, data):
+    async def forward_data(self, data):
         """
         Receive data from forwarder
         :param data:
@@ -25,28 +25,29 @@ class Consumer:
         """
         if not self.is_inited:
             raise ValueError("Consumer not inited")
-        debug(f"Consumer {self.name} received data {data}")
+        debug(f"Consumer-{self.name}: received data {data}")
+        await asyncio.sleep(1)
         self.consume(data)
 
     def consume(self, data: Data):
-        debug(f"Consumer {self.name} consumed data {data}")
+        debug(f"Consumer-{self.name}: consumed data {data}")
 
     def init_consumer(self, interest, forwarder):
         self.interest = interest
         self.forwarder = forwarder
         self.is_inited = True
-        debug(f"Consumer {self.name} inited with interest {self.interest} and forwarder {self.forwarder.node_info.name}")
+        debug(f"Consumer-{self.name}: inited with interest {self.interest} and forwarder {self.forwarder.node_info.name}")
 
     async def sending_interest(self):
         while True:
-            await asyncio.sleep(2)
+            await asyncio.sleep(5)
             await self.send_interest()
-            debug(f"Consumer {self.name} sent interest {self.interest}")
+            debug(f"Consumer-{self.name}: sent interest {self.interest}")
 
     async def dog(self):
         while True:
-            await asyncio.sleep(10)
-            debug(f"Consumer {self.name} is alive, woo woo !")
+            await asyncio.sleep(30)
+            debug(f"Consumer-{self.name}: is alive, woo woo !")
 
     def get_tasks(self):
         return [
