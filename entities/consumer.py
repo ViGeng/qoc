@@ -1,7 +1,7 @@
 import asyncio
 from logging import debug
 
-from entities.packet import Data
+from entities.packet import Data, Interest
 
 
 class Consumer:
@@ -10,6 +10,8 @@ class Consumer:
         self.forwarder = None
         self.name = name
         self.is_inited = False
+        self.is_enabled = True
+        self.counter = 0
 
     async def send_interest(self):
         if not self.is_inited:
@@ -32,14 +34,15 @@ class Consumer:
     def consume(self, data: Data):
         debug(f"Consumer-{self.name}: consumed data {data}")
 
-    def init_consumer(self, interest, forwarder):
+    def init_consumer(self, interest: Interest, forwarder):
         self.interest = interest
         self.forwarder = forwarder
         self.is_inited = True
-        debug(f"Consumer-{self.name}: inited with interest {self.interest} and forwarder {self.forwarder.node_info.name}")
+        debug(
+            f"Consumer-{self.name}: inited with interest {self.interest} and forwarder {self.forwarder.node_info.name}")
 
     async def sending_interest(self):
-        while True:
+        while self.is_enabled:
             await asyncio.sleep(5)
             await self.send_interest()
             debug(f"Consumer-{self.name}: sent interest {self.interest}")

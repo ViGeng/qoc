@@ -1,12 +1,12 @@
 # Named Tree
 
-This is a novel name design in Named Function Networking (NFN). 
-I name this design as it is architected as a BiTree 
+This is a novel name design in Named Function Networking (NFN).
+I name this design as it is architected as a BiTree
 where Ins, as function, is left node(subtree), and Data, as data,
 is right node(subtree).
 
 We don't care what kind of data (function code or parameter data) you send or receive,
-users can combine them to implement their data transmission or computation flexibly. 
+users can combine them to implement their data transmission or computation flexibly.
 
 ## Links
 
@@ -15,8 +15,9 @@ users can combine them to implement their data transmission or computation flexi
 
 ## Update and RoadMap
 
-At current stage, this project focuses on implementing a minimal proof-of-concept (PoC) program 
+At current stage, this project focuses on implementing a minimal proof-of-concept (PoC) program
 to demonstrate the feasibility of the design. So there are several hypotheses and assumptions:
+
 1. The network is reliable and stable.
 2. The data security is not considered.
 3. All nodes know the routing information.
@@ -25,24 +26,46 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 ### Todo
 
 - [ ] network and tree-app decoupling
-    - [ ] function separation and design: a diagram 
+    - [ ] function separation and design: a diagram
     - [ ] API definition
 - [ ] Graph Implementation (not a tree anymore)
 - [ ] A framework to simulate the remote execution process
-  - [ ] Node (forwarders mainly) and its Main components and functions
-    - [ ] 
-  - [ ] Node generator and initializer (generate a network and distribute tasks)
-  - [ ] Routing center
+
+### 2023-05-16
+
+- [ ] application extension for forwarders
+
+### 2023-05-15
+
+- [x] Routing center, mocked routing and test case
+- [x] Node generator and initializer (generate a network and distribute tasks)
+
+```
+             C2
+             │
+             │
+             │
+C1────F4─────F1──────F2─────P1
+             │
+             │
+             F3
+             │
+             │
+             │
+             P2
+```
 
 ### 2023-05-14
 
 - [x] add Class Provider
-- [ ] add more test cases
-  - [x] 1. consumer-to-forwarder
-  - [x] 2. consumer-to-forwarder-to-provider
-  - [x] 3. line-shape: 2 forwarders
+- [x] add more test cases
+    - consumer-to-forwarder
+    - consumer-to-forwarder-to-provider
+    - line-shape: 2 forwarders
+
 
 test cases:
+
 ```
 1.
                Interest
@@ -58,11 +81,11 @@ test cases:
     └──────────┘◄────────── ┴───────────┘◄───── ┴──────────┘
                     Data                 Data
 3.
-              Interest                Interest                 Interest
-┌──────────┐ ─────────► ┌──────────┐ ─────────► ┌───────────┐ ─────────► ┌──────────┐
-│ Consumer │            │ Forarder │            │ Forwarder │            │ Provider │
-└──────────┘ ◄───────── └──────────┘ ◄───────── └───────────┘ ◄───────── └──────────┘
-                Data                    Data                     Data
+                  Interest                Interest                 Interest
+    ┌──────────┐ ─────────► ┌──────────┐ ─────────► ┌───────────┐ ─────────► ┌──────────┐
+    │ Consumer │            │ Forarder │            │ Forwarder │            │ Provider │
+    └──────────┘ ◄───────── └──────────┘ ◄───────── └───────────┘ ◄───────── └──────────┘
+                    Data                    Data                     Data
 ```
 
 ### 2023-05-12
@@ -75,7 +98,7 @@ test cases:
 
 - [x] a python class to abstract `Named Data (ND)`
 - [x] simple recursive execution
-- [x] implement the tree as a multiway tree for performance, because the **depth determines the 
+- [x] implement the tree as a multiway tree for performance, because the **depth determines the
   performance of the whole system**
 - [x] init project
 - [x] write simple shell for concept demo

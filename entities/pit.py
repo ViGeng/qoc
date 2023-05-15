@@ -7,7 +7,6 @@ class PIT:
         self.table: dict = {}
 
     def add(self, interest: Interest, forwarder_name: str):
-        debug(f"add {interest.name}:{forwarder_name} to PIT")
         self.table[interest.name] = forwarder_name
 
     def query_by_interest(self, interest: Interest) -> str:

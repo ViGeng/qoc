@@ -36,6 +36,7 @@ class Forwarder:
     """
 
     def __init__(self, node_info: NodeInfo):
+        self.route = None
         self.node_info = node_info
         self._incoming_interest_queue = asyncio.Queue()
         self._incoming_data_queue = asyncio.Queue()
@@ -53,6 +54,9 @@ class Forwarder:
     def add_route(self, prefix, peer_name, peer_ref):
         self.fib.add(prefix, peer_name)
         self.faces.add(peer_name, peer_ref)
+
+    def set_route(self, route):
+        self.route = route
 
     async def forward_interest(self, interest: Interest, last_hop_name: str, last_hop_ref):
         """
@@ -82,12 +86,13 @@ class Forwarder:
                 return interest
             else:
                 debug(f"Forwarder-{self.node_info.name}: Found local data for {interest}, sending back")
-                self.send_data(response)
+                await self.send_data(response)
 
     async def send_interest(self, interest: Interest):
-        peer_name = self.fib.query(interest)
-        peer = self.faces.query_by_peer_name(peer_name)
-        debug(f"Forwarder-{self.node_info.name}: send interest {interest} to {peer_name}")
+        # peer_name = self.fib.query(interest)
+        # peer = self.faces.query_by_peer_name(peer_name)
+        peer = self.route.query_route(interest.name, self.node_info.name)
+        debug(f"Forwarder-{self.node_info.name}: send interest {interest} to {peer}")
         await peer.forward_interest(interest, self.node_info.name, self)
 
     async def forwarding_interest(self):
@@ -119,11 +124,12 @@ class Forwarder:
         debug(f"Forwarder-{self.node_info.name}: Coroutine forwarding_data started")
         while self.forwarding_data_enabled:
             data: Data = await self.receive_data()
+            self.cs.add(data)
             peer_name = self.pit.pop_by_data(data)
             peer = self.faces.query_by_peer_name(peer_name)
             await peer.forward_data(data)
 
-    def send_data(self, data: Data):
+    async def send_data(self, data: Data):
         """
         Receive a NamedData from outside.
         This is usually called by other forwarders.
@@ -132,7 +138,7 @@ class Forwarder:
         incoming_peer_name = self.pit.pop_by_data(data)
         incoming_peer = self.faces.query_by_peer_name(incoming_peer_name)
         debug(f"Forwarder-{self.node_info.name}: send data {data} to {incoming_peer_name}")
-        incoming_peer.forward_data(data)
+        await incoming_peer.forward_data(data)
 
     async def dog(self):
         while True:
@@ -145,6 +151,9 @@ class Forwarder:
             asyncio.create_task(self.forwarding_data()),
             asyncio.create_task(self.dog()),
         ]
+
+    def __str__(self):
+        return f"Forwarder-{self.node_info.name}"
 
 
 async def initialize():
@@ -173,6 +182,7 @@ async def initialize():
     forwarder1.faces.add(forwarder2.node_info.name, forwarder2)
     forwarder2.cs.add(interest_hello, data_hi)
     await asyncio.gather(*forwarder1.get_tasks(), *forwarder2.get_tasks())
+
 
 if __name__ == '__main__':
     asyncio.run(initialize())
