@@ -2,11 +2,12 @@ import asyncio
 import logging
 from logging import debug
 
-from entities.cs import CS
-from entities.faces import Faces
-from entities.fib import FIB
-from entities.packet import Data, Interest
-from entities.pit import PIT
+from network.entity.component.cs import CS
+from network.entity.component.faces import Faces
+from network.entity.component.fib import FIB
+from network.entity.component.pit import PIT
+from network.entity.packet.data import Data
+from network.entity.packet.interest import Interest
 
 # config logging
 logging.basicConfig(

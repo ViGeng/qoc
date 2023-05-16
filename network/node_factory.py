@@ -1,7 +1,7 @@
 # forwarder factory: create forwarder
-from entities.consumer import Consumer
-from entities.forwarder import Forwarder, NodeInfo
-from entities.provider import Provider
+from network.entity.consumer import Consumer
+from network.entity.forwarder import Forwarder, NodeInfo
+from network.entity.provider import Provider
 
 
 class NodeFactory:

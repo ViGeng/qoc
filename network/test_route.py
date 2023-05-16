@@ -1,9 +1,9 @@
 import asyncio
 
-from entities.forwarder import Forwarder
-from entities.packet import Interest
-from entities.provider import Provider
-from entities.route_factory import RouteFactory
+from network.entity.forwarder import Forwarder
+from network.entity.packet.interest import Interest
+from network.entity.provider import Provider
+from network.route_factory import RouteFactory
 
 
 async def test_route():

@@ -1,5 +1,6 @@
-from entities.packet import Interest
 from logging import debug
+
+from network.entity.packet.interest import Interest
 
 
 class FIB:

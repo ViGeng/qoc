@@ -1,4 +1,5 @@
-from entities.packet import Interest, Data
+from network.entity.packet.data import Data
+from network.entity.packet.interest import Interest
 
 
 class CS:

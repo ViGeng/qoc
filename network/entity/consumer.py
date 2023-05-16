@@ -1,7 +1,8 @@
 import asyncio
 from logging import debug
 
-from entities.packet import Data, Interest
+from network.entity.packet.data import Data
+from network.entity.packet.interest import Interest
 
 
 class Consumer:

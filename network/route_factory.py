@@ -1,5 +1,5 @@
-from entities.node_factory import NodeFactory
-from entities.route import Route
+from network.node_factory import NodeFactory
+from network.route import Route
 
 
 class RouteFactory:

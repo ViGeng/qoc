@@ -1,4 +1,4 @@
-from entities.node_factory import NodeFactory
+from network.node_factory import NodeFactory
 
 
 class Route:

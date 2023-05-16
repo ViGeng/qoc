@@ -1,8 +1,8 @@
 import asyncio
 
-from entities.consumer import Consumer
-from entities.forwarder import NodeInfo, Forwarder
-from entities.packet import Interest, Data
+from network.entity.consumer import Consumer
+from network.entity.forwarder import NodeInfo, Forwarder
+from network.entity.packet import Interest, Data
 
 
 def get_tasks(interest, data):
