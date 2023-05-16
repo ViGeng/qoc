@@ -1,5 +1,7 @@
 import asyncio
 
+from network.entity.extension.hello_extension import HelloExtension
+from network.entity.extension.statistics_extension import StatisticsExtension
 from network.entity.forwarder import Forwarder
 from network.entity.packet.interest import Interest
 from network.entity.provider import Provider
@@ -39,7 +41,12 @@ async def test_route():
     route.node('c1').init_consumer(Interest('/p1/hello'), route.node('f4'))
     route.node('c2').init_consumer(Interest('/p2/hello'), route.node('f1'))
 
-    # route.node('c2').is_enabled = False
+    route.node('c2').is_enabled = False
+
+    hello_extension = HelloExtension()
+    statistics_extension = StatisticsExtension()
+    route.node('f1').extension_slots.add_extension(hello_extension)
+    route.node('f1').extension_slots.add_extension(statistics_extension)
 
     tasks = []
     for node_name, node in route.node_dict.items():

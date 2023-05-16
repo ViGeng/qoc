@@ -33,7 +33,8 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 
 ### 2023-05-16
 
-- [ ] application extension for forwarders
+- [x] extension mechanism for forwarder
+- [ ] NamedTree design implementation by an extension
 
 ### 2023-05-15
 

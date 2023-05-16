@@ -3,6 +3,7 @@ import logging
 from logging import debug
 
 from network.entity.component.cs import CS
+from network.entity.component.extension_slots import ExtensionSlots
 from network.entity.component.faces import Faces
 from network.entity.component.fib import FIB
 from network.entity.component.pit import PIT
@@ -45,6 +46,7 @@ class Forwarder:
         self.pit = PIT()
         self.cs = CS()
         self.faces = Faces()
+        self.extension_slots = ExtensionSlots()
         self.forwarding_interest_enabled = True
         self.forwarding_data_enabled = True
         self.send_hello_interest_enabled = True
@@ -81,7 +83,9 @@ class Forwarder:
         """
         while True:
             interest, last_hop_name = await self._incoming_interest_queue.get()
-            response = self.cs.query(interest)
+            debug(f"Forwarder-{self.node_info.name}: Received interest {interest} from {last_hop_name}")
+            interest = self.extension_slots.inbound_interest_process(interest)
+            response = self.cs.query(interest)  # TODO: CS should be a kind of extension
             if response is None:
                 debug(f"Forwarder-{self.node_info.name}: No local data for {interest}, forwarding")
                 return interest
@@ -94,6 +98,7 @@ class Forwarder:
         # peer = self.faces.query_by_peer_name(peer_name)
         peer = self.route.query_route(interest.name, self.node_info.name)
         debug(f"Forwarder-{self.node_info.name}: send interest {interest} to {peer}")
+        self.extension_slots.outbound_interest_process(interest)
         await peer.forward_interest(interest, self.node_info.name, self)
 
     async def forwarding_interest(self):
@@ -118,6 +123,7 @@ class Forwarder:
         :return:
         """
         data = await self._incoming_data_queue.get()
+        data = self.extension_slots.inbound_data_process(data)
         debug(f"Forwarder:{self.node_info.name}: received data {data}")
         return data
 
@@ -138,6 +144,7 @@ class Forwarder:
         """
         incoming_peer_name = self.pit.pop_by_data(data)
         incoming_peer = self.faces.query_by_peer_name(incoming_peer_name)
+        data = self.extension_slots.outbound_data_process(data)
         debug(f"Forwarder-{self.node_info.name}: send data {data} to {incoming_peer_name}")
         await incoming_peer.forward_data(data)
 
