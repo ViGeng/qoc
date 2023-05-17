@@ -35,7 +35,8 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 ### 2023-05-17
 
 - [x] Content Store implemented as an extension and its test case
-- [x] Interest datastructure: (name) -> (data_name, func_name)
+- [x] Interest datastructure: (name) -> (name, data_name, func_name)
+- [x] nfn-extension: computing NFN interest and its test case
 
 ### 2023-05-16
 
@@ -68,7 +69,6 @@ C1────F4─────F1──────F2─────P1
     - consumer-to-forwarder
     - consumer-to-forwarder-to-provider
     - line-shape: 2 forwarders
-
 
 test cases:
 

@@ -2,7 +2,6 @@ import asyncio
 import logging
 from logging import debug
 
-from network.entity.component.cs import CS
 from network.entity.component.extension_slots import ExtensionSlots
 from network.entity.component.faces import Faces
 from network.entity.component.fib import FIB

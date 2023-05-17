@@ -2,9 +2,10 @@ from network.entity.packet.packet import Packet, MOD
 
 
 class Interest(Packet):
-    def __init__(self, name: str, func=MOD.FUNC0):
+    def __init__(self, name: str, data_name=None, func=MOD.FUNC0):
         super().__init__(name)
-        self.func = None
+        self.func = func
+        self.data_name = data_name
 
     def set_func(self, func):
         """
