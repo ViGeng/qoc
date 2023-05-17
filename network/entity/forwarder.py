@@ -44,7 +44,7 @@ class Forwarder:
         self._incoming_data_queue = asyncio.Queue()
         self.fib = FIB()
         self.pit = PIT()
-        self.cs = CS()
+        # self.cs = CS()
         self.faces = Faces()
         self.extension_slots = ExtensionSlots()
         self.forwarding_interest_enabled = True
@@ -84,14 +84,11 @@ class Forwarder:
         while True:
             interest, last_hop_name = await self._incoming_interest_queue.get()
             debug(f"Forwarder-{self.node_info.name}: Received interest {interest} from {last_hop_name}")
-            interest = self.extension_slots.inbound_interest_process(interest)
-            response = self.cs.query(interest)  # TODO: CS should be a kind of extension
-            if response is None:
-                debug(f"Forwarder-{self.node_info.name}: No local data for {interest}, forwarding")
-                return interest
-            else:
-                debug(f"Forwarder-{self.node_info.name}: Found local data for {interest}, sending back")
-                await self.send_data(response)
+            interest = await self.extension_slots.inbound_interest_process(interest)
+            if interest is None:
+                debug(f"Forwarder-{self.node_info.name}: interest handled by extension, wait for next interest")
+                continue
+            return interest
 
     async def send_interest(self, interest: Interest):
         # peer_name = self.fib.query(interest)
@@ -131,7 +128,6 @@ class Forwarder:
         debug(f"Forwarder-{self.node_info.name}: Coroutine forwarding_data started")
         while self.forwarding_data_enabled:
             data: Data = await self.receive_data()
-            self.cs.add(data)
             peer_name = self.pit.pop_by_data(data)
             peer = self.faces.query_by_peer_name(peer_name)
             await peer.forward_data(data)
@@ -164,33 +160,33 @@ class Forwarder:
         return f"Forwarder-{self.node_info.name}"
 
 
-async def initialize():
-    # TODO: implement a initializer
-    # build network topology
-    node_info1 = NodeInfo(1, 'node1', 'node1')
-    forwarder1 = Forwarder(node_info1)
-
-    node_info2 = NodeInfo(2, 'node2', 'node2')
-    forwarder2 = Forwarder(node_info2)
-
-    forwarder1.add_peer(forwarder2)
-    forwarder2.add_peer(forwarder1)
-
-    # build interest and data
-    interest_hello = Interest(
-        name='/node2/hello',
-    )
-    data_hi = Data(
-        name="/node2/hello",
-        data_content='hello world!',
-    )
-
-    # init nodes
-    forwarder1.fib.add(interest_hello.name, forwarder2.node_info.name)
-    forwarder1.faces.add(forwarder2.node_info.name, forwarder2)
-    forwarder2.cs.add(interest_hello, data_hi)
-    await asyncio.gather(*forwarder1.get_tasks(), *forwarder2.get_tasks())
-
-
-if __name__ == '__main__':
-    asyncio.run(initialize())
+# async def initialize():
+#     # TODO: implement a initializer
+#     # build network topology
+#     node_info1 = NodeInfo(1, 'node1', 'node1')
+#     forwarder1 = Forwarder(node_info1)
+#
+#     node_info2 = NodeInfo(2, 'node2', 'node2')
+#     forwarder2 = Forwarder(node_info2)
+#
+#     forwarder1.add_peer(forwarder2)
+#     forwarder2.add_peer(forwarder1)
+#
+#     # build interest and data
+#     interest_hello = Interest(
+#         name='/node2/hello',
+#     )
+#     data_hi = Data(
+#         name="/node2/hello",
+#         data_content='hello world!',
+#     )
+#
+#     # init nodes
+#     forwarder1.fib.add(interest_hello.name, forwarder2.node_info.name)
+#     forwarder1.faces.add(forwarder2.node_info.name, forwarder2)
+#     forwarder2.cs.add(interest_hello, data_hi)
+#     await asyncio.gather(*forwarder1.get_tasks(), *forwarder2.get_tasks())
+#
+#
+# if __name__ == '__main__':
+#     asyncio.run(initialize())

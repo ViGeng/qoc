@@ -27,26 +27,21 @@ async def test_route():
     F1, F2, F3, F4 are forwarders
     """
     routes = {
-        '/p1/hello': {'f1': 'f2', 'f2': 'p1', 'f3': 'f1', 'f4': 'f1'},
-        '/p2/hello': {'f1': 'f3', 'f2': 'f1', 'f3': 'p2', 'f4': 'f1'},
+        '/p1/hello': {'f1cs': 'f2cs', 'f2cs': 'p1', 'f3cs': 'f1cs', 'f4cs': 'f1cs'},
+        '/p2/hello': {'f1cs': 'f3cs', 'f2cs': 'f1', 'f3cs': 'p2', 'f4cs': 'f1cs'},
     }
     nodes = [
-        'f1', 'f2', 'f3', 'f4',
+        'f1cs', 'f2cs', 'f3cs', 'f4cs',
         'p1', 'p2',
         'c1', 'c2'
     ]
     RouteFactory.init(routes, nodes)
     route = RouteFactory.get_route()
 
-    route.node('c1').init_consumer(Interest('/p1/hello'), route.node('f4'))
-    route.node('c2').init_consumer(Interest('/p2/hello'), route.node('f1'))
+    route.node('c1').init_consumer(Interest('/p1/hello'), route.node('f4cs'))
+    route.node('c2').init_consumer(Interest('/p2/hello'), route.node('f1cs'))
 
     route.node('c2').is_enabled = False
-
-    hello_extension = HelloExtension()
-    statistics_extension = StatisticsExtension()
-    route.node('f1').extension_slots.add_extension(hello_extension)
-    route.node('f1').extension_slots.add_extension(statistics_extension)
 
     tasks = []
     for node_name, node in route.node_dict.items():

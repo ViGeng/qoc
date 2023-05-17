@@ -1,5 +1,6 @@
 # forwarder factory: create forwarder
 from network.entity.consumer import Consumer
+from network.entity.extension.cs_extension import CSExtension
 from network.entity.forwarder import Forwarder, NodeInfo
 from network.entity.provider import Provider
 
@@ -28,6 +29,11 @@ class NodeFactory:
     def get_forwarder(self, fwd_name):
         self._id_counter += 1
         fwd = Forwarder(NodeInfo(self._id_counter, fwd_name, fwd_name))
+
+        # if forwarder name contains 'cs', this forwarder contains a ContentStore
+        if 'cs' in fwd_name:  # ContentStore
+            cs_ext = CSExtension(fwd)
+            fwd.extension_slots.add_extension(cs_ext)
         self.nodes[fwd_name] = fwd
         return fwd
 

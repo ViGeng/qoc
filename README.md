@@ -30,11 +30,16 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
     - [ ] API definition
 - [ ] Graph Implementation (not a tree anymore)
 - [ ] A framework to simulate the remote execution process
+- [ ] NamedTree design implementation by an extension
+
+### 2023-05-17
+
+- [x] Content Store implemented as an extension and its test case
+- [x] Interest datastructure: (name) -> (data_name, func_name)
 
 ### 2023-05-16
 
 - [x] extension mechanism for forwarder
-- [ ] NamedTree design implementation by an extension
 
 ### 2023-05-15
 
