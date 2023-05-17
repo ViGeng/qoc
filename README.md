@@ -37,6 +37,8 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 - [x] Content Store implemented as an extension and its test case
 - [x] Interest datastructure: (name) -> (name, data_name, func_name)
 - [x] nfn-extension: computing NFN interest and its test case
+- [x] Simulator abstraction
+- [x] Test loading from yaml config file
 
 ### 2023-05-16
 

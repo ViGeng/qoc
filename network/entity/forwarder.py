@@ -43,7 +43,6 @@ class Forwarder:
         self._incoming_data_queue = asyncio.Queue()
         self.fib = FIB()
         self.pit = PIT()
-        # self.cs = CS()
         self.faces = Faces()
         self.extension_slots = ExtensionSlots()
         self.forwarding_interest_enabled = True
@@ -158,34 +157,3 @@ class Forwarder:
     def __str__(self):
         return f"Forwarder-{self.node_info.name}"
 
-
-# async def initialize():
-#     # TODO: implement a initializer
-#     # build network topology
-#     node_info1 = NodeInfo(1, 'node1', 'node1')
-#     forwarder1 = Forwarder(node_info1)
-#
-#     node_info2 = NodeInfo(2, 'node2', 'node2')
-#     forwarder2 = Forwarder(node_info2)
-#
-#     forwarder1.add_peer(forwarder2)
-#     forwarder2.add_peer(forwarder1)
-#
-#     # build interest and data
-#     interest_hello = Interest(
-#         name='/node2/hello',
-#     )
-#     data_hi = Data(
-#         name="/node2/hello",
-#         data_content='hello world!',
-#     )
-#
-#     # init nodes
-#     forwarder1.fib.add(interest_hello.name, forwarder2.node_info.name)
-#     forwarder1.faces.add(forwarder2.node_info.name, forwarder2)
-#     forwarder2.cs.add(interest_hello, data_hi)
-#     await asyncio.gather(*forwarder1.get_tasks(), *forwarder2.get_tasks())
-#
-#
-# if __name__ == '__main__':
-#     asyncio.run(initialize())

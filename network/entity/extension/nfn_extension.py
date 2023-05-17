@@ -14,10 +14,12 @@ class NFNExtension(AbstractExtension, ABC):
 
     async def inbound_interest_process(self, interest) -> Interest:
         # if this is a computation request
-        if interest.func is not MOD.FUNC0 and interest.data_name:
+        if interest.func is not MOD.FUNC0 \
+                and interest.func is not None \
+                and interest.data_name:
             debug(f"NFNExtension: inbound_interest_process: computing {interest}")
             # TODO: now we assume this a function rather than a name of program data
-            func = interest.func
+            func = eval(interest.func)
             # TODO: now we assume this a function rather than a name of program data
             para = interest.data_name
             data_content = func(para)
