@@ -7,12 +7,6 @@ import yaml
 from network.simulator import Simulator
 
 
-async def main():
-    route_config, node_config, interest_config = load_config_from_path('config_files/case1.yaml')
-    simulator = Simulator(route_config, node_config, interest_config)
-    await asyncio.gather(*simulator.get_task())
-
-
 # load config from path, return route_config, node_config, interest_config
 def load_config_from_path(path):
     # determine the path exists
@@ -30,6 +24,21 @@ def load_config_from_path(path):
     return route_config, node_config, interest_config
 
 
+async def case1():
+    route_config, node_config, interest_config = load_config_from_path('config_files/case1.yaml')
+    simulator = Simulator(route_config, node_config, interest_config)
+    await asyncio.gather(*simulator.get_task())
+
+
+async def case2():
+    route_config, node_config, interest_config = load_config_from_path('config_files/case2.yaml')
+    simulator = Simulator(route_config, node_config, interest_config)
+    await asyncio.gather(*simulator.get_task())
+
+
 class Test(TestCase):
     def test_simulator_1(self):
-        asyncio.run(main())
+        asyncio.run(case1())
+
+    def test_simulator_2(self):
+        asyncio.run(case2())

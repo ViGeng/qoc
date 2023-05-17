@@ -25,12 +25,28 @@ to demonstrate the feasibility of the design. So there are several hypotheses an
 
 ### Todo
 
-- [ ] network and tree-app decoupling
-    - [ ] function separation and design: a diagram
-    - [ ] API definition
 - [ ] Graph Implementation (not a tree anymore)
-- [ ] A framework to simulate the remote execution process
-- [ ] NamedTree design implementation by an extension
+- [ ] Computation offloading strategy: whether should this node compute or forward?
+- [ ] Routing protocol: how to find the next hop?
+- [ ] Interest(name, data_name, func_name), func_name as an interest name
+
+### 2023-05-18
+
+- [x] update forwarder architecture design: a diagram
+- [x] remove redundant test code
+- [x] add test cases
+
+```
+C1───────────F1-cs-nf────────────F3-cs-nf────────────F5-cs
+             │                   │                   │
+             │                   │                   │
+             │                   │                   │
+             │                   │                   │
+             │                   │                   │
+             │                   │                   │
+             F2-cs───────────────F4-cs-nf────────────┘
+
+```
 
 ### 2023-05-17
 
