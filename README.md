@@ -132,6 +132,9 @@ test cases:
 
 ## Design
 
+This repo is mainly an implementation of a forwarder, 
+the architecture of this forwarder please refer to [this file](https://github.com/ViGeng/named-tree/blob/forwarder/forwarder-design.svg)
+
 NamedData class consists of two parts: `FUNC` and `DATA`.
 FUNC is a function, and DATA is list.
 
