@@ -1,33 +1,41 @@
-# Quality of Computation (QoC) ~~Named Tree~~
-
-This project was evolved from course project for [Advanced Networked Systems](todo) lectured by Prof. [Dirk Kutscher](https://dirk-kutscher.info).
+# Quality of Computation (QoC)
 
 We identify that compuation quality (such as latency, throughput, and energy consumption) can not be guaranteed for emerging applications including Extended Reality (XR), Auto-driving (AD), etc. A mechanism should be designed to address this problem. This repo is a work-in-progress (WIP) proof-of-concept (PoC) implementation of the extension-base forwarder over ICN.
 
-~~This is a novel name design in Named Function Networking (NFN). I name this design as it is architected as a BiTree where Ins, as function, is left node(subtree), and Data, as data,
-is right node(subtree). We don't care what kind of data (function code or parameter data) you send or receive, users can combine them to implement their data transmission or computation flexibly.~~
+> This interest project was evolved from course project for [Advanced Networked Systems](todo) lectured by Prof. [Dirk Kutscher](https://dirk-kutscher.info). This project is inspired by a previous project [Named Tree]. The Named Tree reduces recursive computation by multiple fetching, like iterate over a tree. This project aims to extend the Named Tree to support computation offloading in Information-Centric Networking (ICN).
+> This project is written by Python for fast prototype. Most importantly, the current code focuses on the expresion definition and the decentralized scheduling algorithm. The code is not optimized for performance and not practical for real-world NFN networks. It's easy to be integrated into the NFN project though, if it performs well.🙏
 
-## Links
 
-* [Diagrams via Draw.io](https://app.diagrams.net/#G1nzmcPVBrSF1JE2lbRq35dAeH8vkFOqjQ)
-* [WIP Paper Overleaf](https://www.overleaf.com/project/642da214b9f6e358612b8dc2)
+This project has the following goals:
+* ⏳ Quality of Computation (QoC): Guarantee the computation completion time by QoC aware meta-data.
+* 🪢 Decentralized Scheduling by Routing: Leverage powerful ICN routing to implement decentralization scheduling.
+* 📡 Extension-based Forwarder: Extend the forwarder to support computation offloading.
+
 
 ## Update and RoadMap
 
-At current stage, this project focuses on implementing a minimal proof-of-concept (PoC) program
-to demonstrate the feasibility of the design. So there are several hypotheses and assumptions:
+At current stage, this project focuses on implementing a minimal proof-of-concept (PoC) program to demonstrate the feasibility of the design. So there are several hypotheses and assumptions:
 
 1. The network is reliable and stable.
 2. The data security is not considered.
 3. All nodes know the routing information.
 4. No reward mechanism is considered.
 
-### Todo
+### Decentralized Scheduling
+- [ ] 🧮 Redesign the routing algorithm to support decentralized scheduling.
+- [ ] 🧪 A simulation to evaluate the decentralized scheduling algorithm.
+  
+### Quality of Computation (QoC)
+- [ ] 🚝 Refactor the Priority Queue
+- [ ] 🚦 Add a scheduler to manage the computation task.
 
-- [ ] Graph Implementation (not a tree anymore)
-- [ ] Computation offloading strategy: whether should this node compute or forward?
-- [ ] Routing protocol: how to find the next hop?
-- [ ] Interest(name, data_name, func_name), func_name as an interest name
+### 2024-8-9
+
+- [x] resume the project (it's been a long time since the last update 😂)
+
+### meta-data
+
+- [x] DDL time as the QoC metric
 
 ### 2023-08-16
 
